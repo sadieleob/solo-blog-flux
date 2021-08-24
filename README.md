@@ -442,3 +442,9 @@ Changes not staged for commit:
 ```sh
 git add -A && git commit -m "staging update" && git push
 ```
+Once reconciled the application now has authentication.
+![OIDC](./images/Login.png)
+
+Login using Username: user1 and Password: password
+
+
