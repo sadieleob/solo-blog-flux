@@ -8,7 +8,7 @@ Request a Gloo Edge Enterprise [trial license](https://lp.solo.io/request-trial)
 
 You will need a Kubernetes cluster version 1.16 or newer and kubectl version 1.18.
 For a quick local test, you can use [Microk8s](https://www.solo.io/blog/a-local-development-kubernetes-environment-for-gloo-edge/).
-Any other Kubernetes should work, in general the cluster needs to support Kubernetes ServiceType Loadbalancer.
+Any other Kubernetes should work, in general the cluster needs to support Kubernetes ServiceType Loadbalancer and connectivity to those IPs.
 
 In order to follow the guide you'll need a GitHub account and a
 [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
@@ -30,8 +30,8 @@ curl -s https://fluxcd.io/install.sh | sudo bash
 
 The Git repository contains the following top directories:
 
-- **apps** dir contains kubernetes application manifests, which are the customized per cluster.
-- **infrastructure** dir contains common infrastructure services such as datastores, ingress controllers, etc. and Helm repository definitions. in theis case [Gloo Edge Enterprise](https://docs.solo.io/gloo-edge/latest/) 
+- **apps** dir contains kubernetes application manifests, which are then customized per cluster.
+- **infrastructure** dir contains common infrastructure services such as datastores, ingress controllers, etc. and Helm repository definitions. In this case [Gloo Edge Enterprise](https://docs.solo.io/gloo-edge/latest/) 
 - **clusters** dir contains the Flux configuration per cluster
 
 ```
@@ -151,7 +151,7 @@ spec:
   url: https://storage.googleapis.com/gloo-ee-helm
 ```
 
-Note that with ` interval: 30m` we configure Flux to pull the Helm repository index every five minutes.
+Note that with ` interval: 30m` we configure Flux to pull the Helm repository index every 30 minutes.
 
 ## Bootstrap staging environment (cluster)
 
