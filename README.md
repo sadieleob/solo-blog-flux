@@ -473,5 +473,8 @@ We also edit the virtual service again, to enable the service for the applicatio
 ```sh
 git add -A && git commit -m "staging update" && git push
 ```
+After a few refreshes of the application in the browser we see rate limiting being applied. As seen in the developer view, HTTP code 429 "Too Many Requests"
+![RateLimited](./images/ratelimit.png)
+
 
 
