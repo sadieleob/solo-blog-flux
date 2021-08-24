@@ -498,3 +498,44 @@ git add -A && git commit -m "staging update" && git push
 Once reconciled we now get a more user friendly rate limiting message.
 ![Transform](./images/transform.png)
 
+That is it. Eventually the completed virtual service should look like this.
+
+```yaml
+  namespace: gloo-system
+spec:
+# ---------------- SSL config ---------------------------
+  sslConfig:
+    secretRef:
+      name: upstream-tls
+      namespace: gloo-system
+# -------------------------------------------------------
+  virtualHost:
+    domains:
+      - '*'
+    routes:
+      - matchers:
+         - prefix: /
+# ------------------- OIDC - Only applied to this matcher -------------------
+        options:
+          extauth:
+            configRef:
+              name: oauth
+              namespace: gloo-system
+# ---------------------------------------------------------------------------
+# ---------------- Rate limit config ------------------
+          rateLimitConfigs:
+            refs:
+            - name: global-limit
+              namespace: gloo-system
+#------------------------------------------------------
+# ---------------- Transformation ------------------
+          transformations:
+           responseTransformation:
+              transformationTemplate:
+                parseBodyBehavior: DontParse
+                body:
+                  text: '{% if header(":status") == "429" %}<html><body style="background-color:powderblue;"><h1>Too many Requests!</h1><p>Try again after 1 minute</p></body></html>{% else %}{{ body() }}{% endif %}'
+#---------------------------------------------------
+        routeAction:
+          single:
+```
