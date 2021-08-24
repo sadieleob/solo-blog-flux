@@ -286,7 +286,7 @@ petclinic-db-0             1/1     Running   0          12m
 
 ```
 
-Verify Gloo Edge proxy service EXTERNAL-IP can be accessed, in this case 192.168.64.51:
+Verify Gloo Edge proxy service `EXTERNAL-IP` can be accessed, in this case `192.168.64.51`:
 
 ```console
 kubectl -n gloo-system get service/gateway-proxy
@@ -296,8 +296,8 @@ gateway-proxy   LoadBalancer   10.152.183.20   192.168.64.51   80:31344/TCP,443:
 
 Clone your personal forked repo locally and cd into the folder. We will now finalise the configuration and start to add TLS encryption, Authentication, Rate Limiting and Transformation capabilties to the Petclinic application via Git commits.
 
-First finalise Keycloak (OIDC) configurtaion by running ./scripts/setup.sh
-We'll use the APP_URL, KEYCLOAK_URL & client outputs to configure the AuthConfig later.
+First finalise Keycloak (OIDC) configurtaion by running `./scripts/setup.sh`
+We'll use the `APP_URL`, `KEYCLOAK_URL` & `client` outputs to configure the AuthConfig later.
 
 ```console
 ./scripts/setup.sh
@@ -337,7 +337,7 @@ At this stage you should be able to open the Petclinic application in your brows
 
 - **Add TLS Encryption**
 The setup script created the required certificate and kubernetes secret.
-We edit apps/base/petclinic/virtualservice.yaml and remove the comments for the SSL Config section
+We edit `apps/base/petclinic/virtualservice.yaml` and remove the comments for the SSL Config section
 ```console
 spec:
 # ---------------- SSL config ---------------------------
@@ -348,7 +348,7 @@ spec:
 # -------------------------------------------------------
   virtualHost:
 ```
-Note: Leave the rest of the file as is.
+Note: Leave the rest of the file as is. We'll be returning to this file a couple of times to remove the comments when need be.
 
 Now all we need to do is commit the change to Github and wait for Fluxcd to reconsile the change.
 
@@ -360,9 +360,9 @@ You will now have to use HTTPS (https://192.168.64.51/) to access Petclinic. It'
 ![Cert Warn](./images/cert-warn.png)
 
 - **Add Authentication**
-The setup script configured Keycloak with users, but we need to update apps/staging/petclinic/authconfig.yaml for your environment. Then we'll update apps/staging/petclinic/kustomization.yaml to apply the configuration.
+The setup script configured Keycloak with users, but we need to update `apps/staging/petclinic/authconfig.yaml` for your environment. Then we'll update `apps/staging/petclinic/kustomization.yaml` to apply the configuration.
 
-Find APP_URL, KEYCLOAK_URL & client from the setup.sh output.
+Find `APP_URL`, `KEYCLOAK_URL` & `client` from the `setup.sh` output.
 
 ```console
 ### Petclinic URL for AuthConfig ###
@@ -378,7 +378,7 @@ KEYCLOAK_URL: http://192.168.64.50:8080/auth
 ### Keycloak Client ID for AuthConfig ###
 client: 5b6b138b-1e1d-44ea-82e2-081f1d4de695
 ```
-In this example apps/staging/petclinic/authconfig.yaml needs to be update as follows:
+In this example `apps/staging/petclinic/authconfig.yaml` needs to be update as follows:
 
 ```console
 apiVersion: enterprise.gloo.solo.io/v1
@@ -402,7 +402,7 @@ spec:
         headers:
           idTokenHeader: jwt
 ```
-And then update apps/staging/petclinic/kustomization.yaml by removing the comment in front of authconfig.yaml
+And then update `apps/staging/petclinic/kustomization.yaml` by removing the comment in front of authconfig.yaml
 
 ```console
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -411,7 +411,7 @@ resources:
   - ../../base/petclinic
   - authconfig.yaml
 ```
-Lastly we update the application virtual service to use the OIDC service. Remove the ## commments from apps/base/petclinic/virtualservice.yaml
+Lastly we update the application virtual service to use the OIDC service. Remove the ## commments from `apps/base/petclinic/virtualservice.yaml`
 
 ```console
     routes:
@@ -448,7 +448,7 @@ Once reconciled the application now has authentication.
 Login using Username: user1 and Password: password
 
 - **Add Rate Limiting**
-The rate limiting configuration in this example is global, so we'll apply it at the staging cluster level via apps/staging/ratelimit.yaml and apps/staging/kustomization.yaml. Enable the rate limiting configuration via apps/staging/kustomization.yaml
+The rate limiting configuration in this example is global, so we'll apply it at the staging cluster level via apps/staging/ratelimit.yaml and `apps/staging/kustomization.yaml`. Enable the rate limiting configuration via apps/staging/kustomization.yaml
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -458,7 +458,7 @@ resources:
 - ratelimit.yaml
 ```
 
-We also edit the virtual service again, to enable the service for the application.
+We also edit the virtual service again, to enable the service for the application. Remove the ### commments from `apps/base/petclinic/virtualservice.yaml`
 ```console
               namespace: gloo-system
 # ---------------------------------------------------------------------------
@@ -477,7 +477,7 @@ After a few refreshes of the application in the browser we see rate limiting bei
 ![RateLimited](./images/ratelimit.png)
 
 - **Add a Transformation**
-Lets use the API Gateway to transform the 429 response body. We update apps/base/petclinic/virtualservice.yaml
+Lets use the API Gateway to transform the 429 response body. We update `apps/base/petclinic/virtualservice.yaml`. Remove the #### commments from `apps/base/petclinic/virtualservice.yaml`
 
 ```yaml
               namespace: gloo-system
@@ -495,3 +495,6 @@ Lets use the API Gateway to transform the 429 response body. We update apps/base
 ```sh
 git add -A && git commit -m "staging update" && git push
 ```
+Once reconciled we now get a more user friendly rate limiting message.
+![Transform](./images/transform.png)
+
