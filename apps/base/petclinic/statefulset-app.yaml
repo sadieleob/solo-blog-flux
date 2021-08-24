@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: petclinic
+  namespace: default
+  labels:
+    app: petclinic
+spec:
+  selector:
+    matchLabels:
+      app: petclinic
+  serviceName: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+      - name: petclinic
+        image: soloio/petclinic@sha256:c145b92cf7f9d016206428b79313ba458d538598d1f3548c62749a8acddc474b
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: http-ui
+

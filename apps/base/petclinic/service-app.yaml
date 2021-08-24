@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic
+  namespace: default
+spec:
+  ports:
+  - name: http-ui
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: petclinic
+  sessionAffinity: None
+  type: ClusterIP
+

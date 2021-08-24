@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: petclinic-db
+  namespace: default
+  labels:
+    app: petclinic-db
+spec:
+  selector:
+    matchLabels:
+      app: petclinic-db
+  serviceName: petclinic-db
+  template:
+    metadata:
+      labels:
+        app: petclinic-db
+    spec:
+      containers:
+      - name: petclinic-db
+        image: soloio/petclinic-db@sha256:da76e6d0fcfc5cb92a7e6128cca6bdb15249f79bb7971d10f1d7423ae67581cd
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+          name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: demo
+        - name: MYSQL_DATABASE
+          value: petclinic
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: sql-data
+      volumes:
+      - name: sql-data
+        emptyDir: {}
+
