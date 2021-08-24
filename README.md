@@ -476,5 +476,22 @@ git add -A && git commit -m "staging update" && git push
 After a few refreshes of the application in the browser we see rate limiting being applied. As seen in the developer view, HTTP code 429 "Too Many Requests"
 ![RateLimited](./images/ratelimit.png)
 
+- **Add a Transformation**
+Lets use the API Gateway to transform the 429 response body. We update apps/base/petclinic/virtualservice.yaml
 
-
+```yaml
+              namespace: gloo-system
+#------------------------------------------------------
+# ---------------- Transformation ------------------
+          transformations:
+            responseTransformation:
+              transformationTemplate:
+                parseBodyBehavior: DontParse
+                body:    
+                  text: '{% if header(":status") == "429" %}<html><body style="background-color:powderblue;"><h1>Too many Requests!</h1><p>Try again after 1 minute</p></body></html>{% else %}{{ body() }}{% endif %}'
+#---------------------------------------------------
+        routeAction:
+```
+```sh
+git add -A && git commit -m "staging update" && git push
+```
