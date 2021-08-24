@@ -286,11 +286,12 @@ petclinic-db-0             1/1     Running   0          12m
 
 ```
 
-Verify Gloo Edge proxy service can be accessed:
+Verify Gloo Edge proxy service EXTERNAL-IP can be accessed, in this case 192.168.64.51:
 
 ```console
-$ kubectl -n gloo-system get service
-
+kubectl -n gloo-system get service/gateway-proxy
+NAME            TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE
+gateway-proxy   LoadBalancer   10.152.183.20   192.168.64.51   80:31344/TCP,443:32573/TCP   11m
 ```
 
 
