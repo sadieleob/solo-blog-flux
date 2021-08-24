@@ -447,4 +447,31 @@ Once reconciled the application now has authentication.
 
 Login using Username: user1 and Password: password
 
+- **Add Rate Limiting**
+The rate limiting configuration in this example is global, so we'll apply it at the staging cluster level via apps/staging/ratelimit.yaml and apps/staging/kustomization.yaml. Enable the rate limiting configuration via apps/staging/kustomization.yaml
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- petclinic
+- ratelimit.yaml
+```
+
+We also edit the virtual service again, to enable the service for the application.
+```console
+              namespace: gloo-system
+# ---------------------------------------------------------------------------
+# ---------------- Rate limit config ------------------
+          rateLimitConfigs:
+            refs:
+            - name: global-limit
+              namespace: gloo-system
+#------------------------------------------------------
+# ---------------- Transformation ------------------
+```
+```sh
+git add -A && git commit -m "staging update" && git push
+```
+
 
