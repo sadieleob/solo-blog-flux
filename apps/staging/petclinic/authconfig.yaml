@@ -7,13 +7,13 @@ spec:
   configs:
   - oauth2:
       oidcAuthorizationCode:
-        appUrl: https://192.168.64.51
+        appUrl: **APP_URL here**
         callbackPath: /callback
-        clientId: 2504c599-fcab-4174-9164-a77d3fb5db14 
+        clientId: **client here** 
         clientSecretRef:
           name: oauth
           namespace: gloo-system
-        issuerUrl: "http://192.168.64.50:8080/auth/realms/master/"
+        issuerUrl: "**KEYCLOAK_URL**/realms/master/"
         scopes:
         - email
         headers:
