@@ -356,3 +356,9 @@ Now all we need to do is commit the change to Github and wait for Fluxcd to reco
 git add -A && git commit -m "staging update" && git push
 ```
 
+You will now have to use HTTPS (https://192.168.64.51/) to access Petclinic. It's a self signed certificate, so accept the certificate warnings in your browser.
+![Cert Warn](./images/cert-warn.png)
+
+- **Add Authentication**
+The setup script configured Keycloak with users, but we need to update apps/staging/petclinic/authconfig.yaml for your environment. Then we'll update apps/staging/petclinic/kustomization.yaml to apply the configuration.
+
