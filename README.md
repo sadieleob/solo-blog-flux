@@ -362,3 +362,83 @@ You will now have to use HTTPS (https://192.168.64.51/) to access Petclinic. It'
 - **Add Authentication**
 The setup script configured Keycloak with users, but we need to update apps/staging/petclinic/authconfig.yaml for your environment. Then we'll update apps/staging/petclinic/kustomization.yaml to apply the configuration.
 
+Find APP_URL, KEYCLOAK_URL & client from the setup.sh output.
+
+```console
+### Petclinic URL for AuthConfig ###
+APP_URL: https://192.168.64.51
+### Keycloak endpoint for AuthConfig ###
+KEYCLOAK_URL: http://192.168.64.50:8080/auth
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1803  100  1734  100    69   3000    119 --:--:-- --:--:-- --:--:--  3119
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   571  100   542  100    29   4839    258 --:--:-- --:--:-- --:--:--  5053
+### Keycloak Client ID for AuthConfig ###
+client: 5b6b138b-1e1d-44ea-82e2-081f1d4de695
+```
+In this example apps/staging/petclinic/authconfig.yaml needs to be update as follows:
+
+```console
+apiVersion: enterprise.gloo.solo.io/v1
+kind: AuthConfig
+metadata:
+  name: oauth
+  namespace: gloo-system
+spec:
+  configs:
+  - oauth2:
+      oidcAuthorizationCode:
+        appUrl: https://192.168.64.51
+        callbackPath: /callback
+        clientId: 5b6b138b-1e1d-44ea-82e2-081f1d4de695
+        clientSecretRef:
+          name: oauth
+          namespace: gloo-system
+        issuerUrl: "http://192.168.64.50:8080/auth/realms/master/"
+        scopes:
+        - email
+        headers:
+          idTokenHeader: jwt
+```
+And then update apps/staging/petclinic/kustomization.yaml by removing the comment in front of authconfig.yaml
+
+```console
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base/petclinic
+  - authconfig.yaml
+```
+Lastly we update the application virtual service to use the OIDC service. Remove the ## commments from apps/base/petclinic/virtualservice.yaml
+
+```console
+    routes:
+      - matchers:
+         - prefix: /
+# ------------------- OIDC - Only applied to this matcher -------------------
+        options:
+          extauth:
+            configRef:
+              name: oauth
+              namespace: gloo-system
+# ---------------------------------------------------------------------------
+# ---------------- Rate limit config ------------------
+```
+
+```console
+❯ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  modified:   apps/base/petclinic/virtualservice.yaml
+	modified:   apps/staging/petclinic/authconfig.yaml
+	modified:   apps/staging/petclinic/kustomization.yaml
+```
+```sh
+git add -A && git commit -m "staging update" && git push
+```
