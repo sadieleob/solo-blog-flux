@@ -294,7 +294,7 @@ NAME            TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          
 gateway-proxy   LoadBalancer   10.152.183.20   192.168.64.51   80:31344/TCP,443:32573/TCP   11m
 ```
 
-Clone your personal forked repo locally. We will now finalise the configuration and start to add TLS encryption, Authentication, Rate Limiting and Transformation capabilties to the Petclinic application via Git commits.
+Clone your personal forked repo locally and cd into the folder. We will now finalise the configuration and start to add TLS encryption, Authentication, Rate Limiting and Transformation capabilties to the Petclinic application via Git commits.
 
 First finalise Keycloak (OIDC) configurtaion by running ./scripts/setup.sh
 We'll use the APP_URL, KEYCLOAK_URL & client outputs to configure the AuthConfig later.
@@ -331,7 +331,26 @@ Keycloak users created
 +--------+-------+
 Keycloak configuration complete
 ```
+## Add API Gateway security features to the application
+At this stage you should be able to open the Petclinic application in your browser, http://192.168.64.51 in this case.
+![HTTP App](./images/http-petclinic.png)
 
+- **Add TLS Encryption**
+The setup script created the required certificate and kubernetes secret.
+We edit apps/base/petclinic/virtualservice.yaml and remove the comments for the SSL Config section
+```console
+spec:
+# ---------------- SSL config ---------------------------
+  sslConfig:
+    secretRef:
+      name: upstream-tls
+      namespace: gloo-system
+# -------------------------------------------------------
+  virtualHost:
+```
+Note: Leave the rest of the file as is.
+
+Now all we need to do is commit the change to Github and wait for Fluxcd to reconsile the change.
 
 ```sh
 git add -A && git commit -m "staging update" && git push
