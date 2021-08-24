@@ -296,6 +296,43 @@ gateway-proxy   LoadBalancer   10.152.183.20   192.168.64.51   80:31344/TCP,443:
 
 Clone your personal forked repo locally. We will now finalise the configuration and start to add TLS encryption, Authentication, Rate Limiting and Transformation capabilties to the Petclinic application via Git commits.
 
+First finalise Keycloak (OIDC) configurtaion by running ./scripts/setup.sh
+We'll use the APP_URL, KEYCLOAK_URL & client outputs to configure the AuthConfig later.
+
+```console
+./scripts/setup.sh
+Generating a 2048 bit RSA private key
+...............+++
+..........+++
+writing new private key to 'tls.key'
+-----
+secret/upstream-tls created
+TLS certificate secret created
+### Petclinic URL for AuthConfig ###
+APP_URL: https://192.168.64.51
+### Keycloak endpoint for AuthConfig ###
+KEYCLOAK_URL: http://192.168.64.50:8080/auth
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1803  100  1734  100    69   3000    119 --:--:-- --:--:-- --:--:--  3119
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   571  100   542  100    29   4839    258 --:--:-- --:--:-- --:--:--  5053
+### Keycloak Client ID for AuthConfig ###
+client: 5b6b138b-1e1d-44ea-82e2-081f1d4de695
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1371  100  1317  100    54  23105    947 --:--:-- --:--:-- --:--:-- 24052
+Keycloak users created
++--------+-------+
+| SECRET | TYPE  |
++--------+-------+
+| oauth  | OAuth |
++--------+-------+
+Keycloak configuration complete
+```
+
+
 ```sh
 git add -A && git commit -m "staging update" && git push
 ```
