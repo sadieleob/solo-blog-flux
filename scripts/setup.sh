@@ -11,11 +11,11 @@ echo "TLS certificate secret created"
 # Get Keycloak URL and token
 export APP_URL=$(glooctl proxy url --port https | cut -d: -f1-2)
 echo "### Petclinic URL for AuthConfig ###"
-echo "$APP_URL"
+echo "APP_URL: $APP_URL"
 
 export KEYCLOAK_URL=http://$(kubectl get service keycloak -o jsonpath='{.status.loadBalancer.ingress[0].ip}'):8080/auth
 echo "### Keycloak endpoint for AuthConfig ###"
-echo "$KEYCLOAK_URL"
+echo "KEYCLOAK_URL: $KEYCLOAK_URL"
 
 export KEYCLOAK_TOKEN=$(curl -d "client_id=admin-cli" -d "username=admin" -d "password=admin" -d "grant_type=password" "$KEYCLOAK_URL/realms/master/protocol/openid-connect/token" | jq -r .access_token)
 

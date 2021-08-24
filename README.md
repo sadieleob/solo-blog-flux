@@ -294,6 +294,7 @@ NAME            TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          
 gateway-proxy   LoadBalancer   10.152.183.20   192.168.64.51   80:31344/TCP,443:32573/TCP   11m
 ```
 
+Clone your personal forked repo locally. We will now finalise the configuration and start to add TLS encryption, Authentication, Rate Limiting and Transformation capabilties to the Petclinic application via Git commits.
 
 ```sh
 git add -A && git commit -m "staging update" && git push
