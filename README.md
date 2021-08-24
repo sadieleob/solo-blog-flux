@@ -477,7 +477,7 @@ After a few refreshes of the application in the browser we see rate limiting bei
 ![RateLimited](./images/ratelimit.png)
 
 - **Add a Transformation**
-Lets use the API Gateway to transform the 429 response body. We update `apps/base/petclinic/virtualservice.yaml`. Remove the #### commments from `apps/base/petclinic/virtualservice.yaml`
+Lets use the API Gateway to transform the 429 response body. We update apps/base/petclinic/virtualservice.yaml. Remove the #### commments from `apps/base/petclinic/virtualservice.yaml`
 
 ```yaml
               namespace: gloo-system
@@ -498,7 +498,7 @@ git add -A && git commit -m "staging update" && git push
 Once reconciled we now get a more user friendly rate limiting message.
 ![Transform](./images/transform.png)
 
-That is it. Eventually the completed virtual service should look like this.
+That is it. Eventually the completed virtual service `apps/base/petclinic/virtualservice.yaml` should look like this.
 
 ```yaml
   namespace: gloo-system
