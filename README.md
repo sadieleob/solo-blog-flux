@@ -255,7 +255,35 @@ and creates a deploy key with read-only access on GitHub, so it can pull changes
 Wait for the Gloo Edge, Keycloak and Petclinic application installations to complete on staging:
 
 ```console
-kubectl get pods -A
+kubectl get po -n flux-system
+NAME                                       READY   STATUS    RESTARTS   AGE
+helm-controller-7b58d45956-c6dl9           1/1     Running   0          18m
+notification-controller-5f4f4967b9-9v5pw   1/1     Running   0          18m
+kustomize-controller-bb6c99658-8pf9k       1/1     Running   0          18m
+source-controller-6448c7989-wwgn6          1/1     Running   0          18m
+
+kubectl get po -n gloo-system
+NAME                                                  READY   STATUS    RESTARTS   AGE
+redis-d7786cb9d-tqtbp                                 1/1     Running   0          8m23s
+gloo-58cf777ffb-n86qp                                 1/1     Running   0          8m23s
+gateway-proxy-659c5cdc96-8rvl8                        1/1     Running   0          8m22s
+discovery-89cc57dbd-rqp6k                             1/1     Running   0          8m23s
+observability-6894c76ddb-qgtwg                        1/1     Running   0          8m22s
+gloo-fed-7b9ff9c44-m7x46                              1/1     Running   0          8m22s
+glooe-prometheus-kube-state-metrics-85c5fcb4c-xp7qb   1/1     Running   0          8m23s
+gateway-7dbd774b84-xjdrk                              1/1     Running   0          8m23s
+glooe-grafana-75dfc55d4d-tgtrb                        1/1     Running   0          8m23s
+extauth-6489bc55f9-6mldc                              1/1     Running   0          8m22s
+gloo-fed-console-65859578c7-wqtxz                     3/3     Running   0          8m22s
+glooe-prometheus-server-d99d4477b-8vcr9               2/2     Running   0          8m22s
+rate-limit-5dfb7b4cbb-b47cm                           1/1     Running   1          8m22s
+
+kubectl get po -n default
+NAME                       READY   STATUS    RESTARTS   AGE
+keycloak-d68dbc7fb-psn99   1/1     Running   0          16m
+petclinic-0                1/1     Running   0          12m
+petclinic-db-0             1/1     Running   0          12m
+
 ```
 
 Verify Gloo Edge proxy service can be accessed:
