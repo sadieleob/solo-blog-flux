@@ -236,7 +236,7 @@ Update infrastructure/glooedge/release.yaml license_key with your trial license:
             tag: 1.8.6
 ```
 
-Set the kubectl context to your staging cluster (in this case it's a local microk8s) and bootstrap Flux:
+Set the kubectl context to your staging cluster (in this case it's a local `microk8s`) and bootstrap Flux:
 
 ```sh
 flux bootstrap github \
