@@ -1,6 +1,6 @@
 # Fluxcd and Gloo Edge
 
-This repo was adapted from the [Fluxcd Project](https://github.com/fluxcd/flux2-kustomize-helm-example). Once you have completed this setup, you'll be able to reference the Fluxcd repo and documents to clone the setup.
+This repo was adapted from the [Fluxcd Project](https://github.com/fluxcd/flux2-kustomize-helm-example). Once you have completed this setup, you'll be able to reference the Fluxcd repo and documents to clone the setup to multi clusters.
 
 ## Prerequisites
 
