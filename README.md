@@ -4,7 +4,7 @@ This repo was adapted from the [Fluxcd Project](https://github.com/fluxcd/flux2-
 
 ## Prerequisites
 
-Request a Gloo Edge Enterprise [trial license](https://lp.solo.io/request-trial).
+Request a Gloo Edge Enterprise [trial license](https://lp.solo.io/request-trial). This is required to enable the enterprise features of the API Gateway, e.g. Authentication, Rate Limiting, Transformation, etc.
 
 You will need a Kubernetes cluster version 1.16 or newer and kubectl version 1.18.
 For a quick local test, you can use [Microk8s](https://www.solo.io/blog/a-local-development-kubernetes-environment-for-gloo-edge/).
