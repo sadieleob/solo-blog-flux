@@ -540,3 +540,4 @@ spec:
         routeAction:
           single:
 ```
+As you clone the cluster from here, you wont have to go through the staged configuration of the application's API Gateway capabilities. We did that here to illustrate GitOps based configuration of the API Gateway. Simple `flux bootstrap` with the new cluster context and everything will be provisoned to this state on the new cluster. You will have to run the setup script to configure Keycloak.
