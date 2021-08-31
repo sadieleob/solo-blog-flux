@@ -379,7 +379,7 @@ KEYCLOAK_URL: http://192.168.64.50:8080/auth
 ### Keycloak Client ID for AuthConfig ###
 client: 5b6b138b-1e1d-44ea-82e2-081f1d4de695
 ```
-In this example `apps/staging/petclinic/authconfig.yaml` needs to be update as follows:
+In this example `apps/staging/petclinic/authconfig.yaml` needs to be updated as follows:
 
 ```console
 apiVersion: enterprise.gloo.solo.io/v1
