@@ -16,10 +16,3 @@ spec:
   install:
     remediation:
       retries: 5 
-  values:
-    license_key: "https://lp.solo.io/request-trial"
-    gloo:
-      gloo:
-        deployment:
-          image:
-            tag: 1.8.6
