@@ -16,3 +16,5 @@ spec:
   install:
     remediation:
       retries: 5 
+  values:
+    license_key: "https://lp.solo.io/request-trial"
