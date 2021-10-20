@@ -230,11 +230,7 @@ Update infrastructure/glooedge/release.yaml license_key with your trial license:
       retries: 5 
   values:
     license_key: "eyJl.........."
-    gloo:
-      gloo:
-        deployment:
-          image:
-            tag: 1.8.6
+
 ```
 
 Set the kubectl context to your staging cluster (in this case it's a local `microk8s`) and bootstrap Flux:
