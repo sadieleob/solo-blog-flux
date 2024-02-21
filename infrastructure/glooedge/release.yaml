@@ -17,4 +17,19 @@ spec:
     remediation:
       retries: 5 
   values:
+    gloo:
+      gateway:
+        validation:
+          allowWarnings: false
+          alwaysAcceptResources: false
+          disableTransformationValidation: false
+          enabled: true
+          failurePolicy: Ignore
+          secretName: gateway-validation-certs
+          serverEnabled: true
+          validationServerGrpcMaxSizeBytes: 104857600
+          warnRouteShortCircuiting: false
+          webhook:
+            disableHelmHook: false
+            enabled: true
     license_key: "https://lp.solo.io/request-trial"
