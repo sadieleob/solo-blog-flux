@@ -20,13 +20,13 @@ spec:
     gloo:
       gateway:
         validation:
-          allowWarnings: false
-          alwaysAcceptResources: false
+          allowWarnings: true
+          alwaysAcceptResources: true
           disableTransformationValidation: false
           enabled: true
           failurePolicy: Ignore
           secretName: gateway-validation-certs
-          serverEnabled: true
+          serverEnabled: false
           validationServerGrpcMaxSizeBytes: 104857600
           warnRouteShortCircuiting: false
           webhook:
